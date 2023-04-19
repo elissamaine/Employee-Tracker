@@ -69,18 +69,31 @@ const start = () => {
 };
 
 const viewDepartments = () => {
-    const sql = `SELECT * FROM department`;
-    db.query(sql, (err, rows) => {
-      const table = cTable.getTable(rows);
-      console.log(table);
-      return;
-    });
-
+  const sql = `SELECT * FROM department`;
+  db.query(sql, (err, rows) => {
+    const table = cTable.getTable(rows);
+    console.log(table);
+    return;
+  });
 };
 
-const viewRoles = () => {};
+const viewRoles = () => {
+  const sql = `SELECT * FROM role`;
+  db.query(sql, (err, rows) => {
+    const table = cTable.getTable(rows);
+    console.log(table);
+    return;  
+  });
+};
 
-const viewEmployees = () => {};
+const viewEmployees = () => {
+  const sql = `SELECT * FROM employee`;
+  db.query(sql, (err, rows) => {
+    const table = cTable.getTable(rows);
+    console.log(table);
+    return;
+  });
+};
 
 const addDepartment = () => {};
 
