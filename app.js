@@ -73,8 +73,8 @@ const viewDepartments = () => {
   db.query(sql, (err, rows) => {
     const table = cTable.getTable(rows);
     console.log(table);
-    return;
   });
+  return;
 };
 
 const viewRoles = () => {
