@@ -14,7 +14,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//connect to the department 
+//connect to the company_db database 
 const db = mysql.createConnection(
   {
     host: 'localhost',
@@ -25,3 +25,69 @@ const db = mysql.createConnection(
   console.log(`Connected to the department_db database.`)
 );
 
+const start = () => {
+  inquirer
+    .prompt({
+      type: 'list',
+      name: 'openingPrompt',
+      message: 'what would you like to do?',
+      choices: [
+        'View all departments',
+        'View all roles',
+        'View all employees',
+        'Add a department',
+        'Add a role',
+        'Add an employee',
+        'Update an employee role',
+      ]
+    })
+    .then((response) => {
+        switch (response.openingPrompt) {
+            case 'View all departments':
+              viewDepartments();
+              break;
+            case 'View all roles':
+              viewRoles();
+              break;
+            case 'View all employees':
+              viewEmployees();
+              break;
+            case 'Add a department':
+              addDepartment();
+              break;
+            case 'Add a role':
+              addRole();
+              break;
+            case 'Add an employee':
+              addEmployee();
+              break;
+            case 'Update an employee role':
+              updateEmployeeRole();
+              break;
+        }
+    })
+};
+
+const viewDepartments = () => {
+    const sql = `SELECT * FROM department`;
+    db.query(sql, (err, rows) => {
+      const table = cTable.getTable(rows);
+      console.log(table);
+      return;
+    });
+
+};
+
+const viewRoles = () => {};
+
+const viewEmployees = () => {};
+
+const addDepartment = () => {};
+
+const addRole = () => {};
+
+const addEmployee = () => {};
+
+const updateEmployeeRole = () => {};
+
+start();
