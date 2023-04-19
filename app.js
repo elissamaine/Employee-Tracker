@@ -45,53 +45,56 @@ const start = () => {
         switch (response.openingPrompt) {
             case 'View all departments':
               viewDepartments();
-              break;
+            break;
             case 'View all roles':
               viewRoles();
-              break;
+            break;
             case 'View all employees':
               viewEmployees();
-              break;
+            break;
             case 'Add a department':
               addDepartment();
-              break;
+            break;
             case 'Add a role':
               addRole();
-              break;
+            break;
             case 'Add an employee':
               addEmployee();
-              break;
+            break;
             case 'Update an employee role':
               updateEmployeeRole();
-              break;
+            break;
         }
     })
 };
 
 const viewDepartments = () => {
-  const sql = `SELECT * FROM department`;
+  const sql = `SELECT * FROM departments`;
   db.query(sql, (err, rows) => {
     const table = cTable.getTable(rows);
+    console.log('View all departments');
     console.log(table);
+    start();
   });
-  return;
 };
 
 const viewRoles = () => {
-  const sql = `SELECT * FROM role`;
+  const sql = `SELECT * FROM roles`;
   db.query(sql, (err, rows) => {
     const table = cTable.getTable(rows);
+    console.log('View all roles');
     console.log(table);
-    return;  
+    start();  
   });
 };
 
 const viewEmployees = () => {
-  const sql = `SELECT * FROM employee`;
+  const sql = `SELECT * FROM employees`;
   db.query(sql, (err, rows) => {
     const table = cTable.getTable(rows);
+    console.log('View all employees');
     console.log(table);
-    return;
+    start();
   });
 };
 
