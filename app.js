@@ -188,6 +188,10 @@ const addEmployee = () => {
       }
     ])
     .then ((response) => {
+      // changes users string inputs of null to int null for mysql query
+      if (response.manager === 'NULL' || response.manager === 'null' || response.manager === 'Null') {
+        response.manager = null;
+        }
       const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
       const params = [response.firstName, response.lastName, response.role, response.manager];
       db.query(sql, params, (err, data) => {
