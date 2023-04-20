@@ -14,7 +14,7 @@ const app = express();
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-//connect to the company_db database 
+//connect to the company_db database that was created in the db/schema.sql file
 const db = mysql.createConnection(
   {
     host: 'localhost',
@@ -25,6 +25,7 @@ const db = mysql.createConnection(
   console.log(`Connected to the department_db database.`)
 );
 
+// inquirer command line prompt with list of options to interact with the database with mysql
 const start = () => {
   inquirer
     .prompt({
@@ -69,6 +70,8 @@ const start = () => {
     })
 };
 
+// functions containing the mysql queries to interact with the database
+// displayes table of the departments and id's 
 const viewDepartments = () => {
   const sql = `SELECT * FROM departments`;
   db.query(sql, (err, data) => {
@@ -79,6 +82,7 @@ const viewDepartments = () => {
   });
 };
 
+// displayes table of the roles and id's salaries and department id's
 const viewRoles = () => {
   const sql = `SELECT * FROM roles`;
   db.query(sql, (err, data) => {
@@ -89,6 +93,7 @@ const viewRoles = () => {
   });
 };
 
+// displayes table of the employees, their id's, first and last names, role id's and manager id's
 const viewEmployees = () => {
   const sql = `SELECT * FROM employees`;
   db.query(sql, (err, data) => {
@@ -99,6 +104,7 @@ const viewEmployees = () => {
   });
 };
 
+// prompts user to input data in order to add a department to the database
 const addDepartment = () => {
   inquirer
     .prompt({
@@ -121,6 +127,7 @@ const addDepartment = () => {
     });
 };
 
+//prompts user to input data in order to add a role to the database
 const addRole = () => {
   inquirer
     .prompt([
@@ -155,6 +162,7 @@ const addRole = () => {
   })
 };
 
+// prompts user to input data in order to add an employee to the database
 const addEmployee = () => {
   inquirer
     .prompt([
@@ -194,6 +202,7 @@ const addEmployee = () => {
     })
 };
 
+// prompts user to input data in order to update an employees role in the database
 const updateEmployeeRole = () => {
   inquirer
     .prompt([
