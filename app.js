@@ -39,6 +39,7 @@ const start = () => {
         'Add a role',
         'Add an employee',
         'Update an employee role',
+        'Update an employee manager',
       ]
     })
     .then((response) => {
@@ -193,6 +194,34 @@ const addEmployee = () => {
     })
 };
 
-const updateEmployeeRole = () => {};
+const updateEmployeeRole = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employeeId',
+        message: 'What is the id of the employee you would like to update?',
+      },
+      {
+        type: 'input',
+        name: 'roleId',
+        message: 'What is the id of the employees new role?',
+      }
+    ])
+    .then((response) => {
+      const sql = `UPDATE employees SET role_id = ? WHERE id = ?`;
+      const params = [response.roleId, response.employeeId];
+      db.query(sql, params, (err, data) => {
+        if (err) {
+          console.log(err);
+          console.log('Employee role could not be updated.');
+        } else {
+          console.log('Employee role updated!');
+        }
+        start();
+        });
+    })
+};
+
 
 start();
