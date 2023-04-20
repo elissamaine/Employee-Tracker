@@ -45,33 +45,33 @@ const start = () => {
         switch (response.openingPrompt) {
             case 'View all departments':
               viewDepartments();
-            break;
+              break;
             case 'View all roles':
               viewRoles();
-            break;
+              break;
             case 'View all employees':
               viewEmployees();
-            break;
+              break;
             case 'Add a department':
               addDepartment();
-            break;
+              break;
             case 'Add a role':
               addRole();
-            break;
+              break;
             case 'Add an employee':
               addEmployee();
-            break;
+              break;
             case 'Update an employee role':
               updateEmployeeRole();
-            break;
+              break;
         }
     })
 };
 
 const viewDepartments = () => {
   const sql = `SELECT * FROM departments`;
-  db.query(sql, (err, rows) => {
-    const table = cTable.getTable(rows);
+  db.query(sql, (err, data) => {
+    const table = cTable.getTable(data);
     console.log('View all departments');
     console.log(table);
     start();
@@ -80,8 +80,8 @@ const viewDepartments = () => {
 
 const viewRoles = () => {
   const sql = `SELECT * FROM roles`;
-  db.query(sql, (err, rows) => {
-    const table = cTable.getTable(rows);
+  db.query(sql, (err, data) => {
+    const table = cTable.getTable(data);
     console.log('View all roles');
     console.log(table);
     start();  
@@ -90,19 +90,108 @@ const viewRoles = () => {
 
 const viewEmployees = () => {
   const sql = `SELECT * FROM employees`;
-  db.query(sql, (err, rows) => {
-    const table = cTable.getTable(rows);
+  db.query(sql, (err, data) => {
+    const table = cTable.getTable(data);
     console.log('View all employees');
     console.log(table);
     start();
   });
 };
 
-const addDepartment = () => {};
+const addDepartment = () => {
+  inquirer
+    .prompt({
+      type: 'input',
+      name: 'departmentName',
+      message: 'What is the name of the department you would like to add?',
+    })
+    .then((response) => {
+      const sql = `INSERT INTO departments (dp_name) VALUES (?)`;
+      const params = [response.departmentName];
+      db.query(sql, params, (err, data) => {
+        if (err) {
+          console.log(err);
+          console.log('Department could not be added.');
+        } else {
+          console.log('Department added!');
+        }
+        start();
+      });
+    });
+};
 
-const addRole = () => {};
+const addRole = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'title',
+        message: 'What is the title of the role you would like to add?',
+    },
+    {
+      type: 'input',
+      name: 'salary',
+      message: 'What is the salary of the role you would like to add?',
+    },
+    {
+      type: 'input',
+      name: 'department',
+      message: 'What is the department id for the role you would like to add?',
+    }
+  ])
+  .then((response) => {
+    const sql = `INSERT INTO roles (title, salary, department_id) VALUES (?, ?, ?)`;
+    const params = [response.title, response.salary, response.department];
+    db.query(sql, params, (err, data) => {
+      if (err) {
+        console.log(err);
+        console.log('Role could not be added.');
+      } else {
+        console.log('Role added!');
+      }
+      start();
+    });
+  })
+};
 
-const addEmployee = () => {};
+const addEmployee = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'firstName',
+        message: 'What is the first name of the employee you would like to add?',
+      },
+      {
+        type: 'input',
+        name: 'lastName',
+        message: 'What is the last name of the employee you would like to add?',
+      },
+      {
+        type: 'input',
+        name: 'role',
+        message: 'What is the id for the role of the employee you would like to add?',
+      },
+      {
+        type: 'input',
+        name: 'manager',
+        message: 'What is the id of the manager for the employee you would like to add? (NULL if none)',
+      }
+    ])
+    .then ((response) => {
+      const sql = `INSERT INTO employees (first_name, last_name, role_id, manager_id) VALUES (?, ?, ?, ?)`;
+      const params = [response.firstName, response.lastName, response.role, response.manager];
+      db.query(sql, params, (err, data) => {
+        if (err) {
+          console.log(err);
+          console.log('Employee could not be added.');
+        } else {
+          console.log('Employee added!');
+        }
+        start();
+      });
+    })
+};
 
 const updateEmployeeRole = () => {};
 
