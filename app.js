@@ -66,6 +66,9 @@ const start = () => {
             case 'Update an employee role':
               updateEmployeeRole();
               break;
+            case 'Update an employee manager':
+              updateEmployeeManager();
+              break;
         }
     })
 };
@@ -233,6 +236,39 @@ const updateEmployeeRole = () => {
         }
         start();
         });
+    })
+};
+
+// prompts user to input data in order to update an employees manager in the database
+const updateEmployeeManager = () => {
+  inquirer
+    .prompt([
+      {
+        type: 'input',
+        name: 'employee',
+        message: 'What is the id of the employee you would like to update?',
+      },
+      {
+        type: 'input',
+        name: 'manager',
+        message: 'What is the id of the employees new manager? (NULL if none)',
+      }
+    ])
+    .then((response) => {
+      if (response.manager === 'NULL' || response.manager === 'null' || response.manager === 'Null') {
+        response.manager = null;
+        }
+      const sql = `UPDATE employees SET manager_id = ? WHERE id = ?`;
+      const params = [response.manager, response.employee];
+      db.query(sql, params, (err, data) => {
+        if (err) {
+          console.log(err);
+          console.log('Employee manager could not be updated.');
+        } else {
+          console.log('Employee manager updated!');
+        }
+        start();
+      });
     })
 };
 

@@ -5,6 +5,16 @@
 
   An emplyee tracker command-line application that uses inquirer to let the user get put and update data from the company database. Inquirer prompts the user to choose from a list of queries to interact with the databade. The user can view tables for the department, role, and employee data. The user can also add a department, role, or emplyee as well as update an emplyee's role after answering a few questions.
 
+  ## Link to Walkthrough Video
+
+  [Walkthrough Video](https://drive.google.com/file/d/16OXH_3RVIPPiOPy0ksfFoOViWtKryhij/view)
+
+  ## Resources 
+
+  - [Inquirer](https://www.npmjs.com/package/inquirer/v/8.2.4)
+  - [MySQL2](https://www.npmjs.com/package/mysql2?activeTab=readme)
+  - [console.table](https://www.npmjs.com/package/console.table?activeTab=readme)
+
   ## Table of Contents
 
   - [Installation](#installation)
